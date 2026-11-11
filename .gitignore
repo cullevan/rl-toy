@@ -1,0 +1,10 @@
+# Python-generated files
+__pycache__/
+*.py[cod]
+
+# Local environment variables
+.env
+
+# Generated experiment outputs
+runs/
+checkpoints/
