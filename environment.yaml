@@ -1,0 +1,11 @@
+name: rl-toy
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - "stable-baselines3[extra]"
+      - "gymnasium[classic-control]"
