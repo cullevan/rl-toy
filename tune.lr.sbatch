@@ -9,7 +9,7 @@
 #SBATCH --propagate=NONE
 #SBATCH --array=0-69
 #SBATCH --chdir=/home/c/cuonglv/projects/rl-toy
-#SBATCH --output=runs/slurm/%x-%A_%a.out
+#SBATCH --output=runs-lr/slurm/%x-%A_%a.out
 
 set -euo pipefail
 
