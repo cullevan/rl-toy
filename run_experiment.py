@@ -14,6 +14,9 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--name", required=True)
 parser.add_argument("--seed", type=int, default=42)
 parser.add_argument("--steps", type=int, default=20000)
+parser.add_argument("--learning-rate", type=float, default=0.0003)
+parser.add_argument("--eval-seed", type=int, default=1000)
+parser.add_argument("--eval-episodes", type=int, default=20)
 args = parser.parse_args()
 
 if Path(args.name).name != args.name or args.name in {".", ".."}:
@@ -31,8 +34,9 @@ config = {
     "device": "cpu",
     "seed": args.seed,
     "requested_timesteps": args.steps,
-    "evaluation_seed": 100,
-    "evaluation_episodes": 10,
+    "learning_rate": args.learning_rate,
+    "evaluation_seed": args.eval_seed,
+    "evaluation_episodes": args.eval_episodes,
     "git_commit": subprocess.check_output(
         ["git", "rev-parse", "HEAD"], text=True
     ).strip(),
@@ -59,8 +63,12 @@ eval_env = Monitor(gym.make(config["environment"]))
 
 try:
     model = PPO(
-        config["policy"], train_env,
-        device=config["device"], seed=args.seed, verbose=1,
+        config["policy"],
+        train_env,
+        learning_rate=config["learning_rate"],
+        device=config["device"],
+        seed=args.seed,
+        verbose=1,
     )
 
     checkpoint_callback = CheckpointCallback(

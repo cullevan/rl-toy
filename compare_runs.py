@@ -5,9 +5,10 @@ from statistics import mean, pstdev
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# Include completed experiments that have evaluation results.
 run_dirs = sorted(
-    path.parent for path in Path("runs").glob("*/metrics.json")
+    path.parent
+    for root in (Path("runs"), Path("hpc-runs"))
+    for path in root.glob("*/metrics.json")
 )
 
 if not run_dirs:
